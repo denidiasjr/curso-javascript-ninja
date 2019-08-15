@@ -76,7 +76,9 @@
     ["<div>", "<section>", "<blockquote>"]
  */
   console.log("\nMatch com a abertura de uma tag HTML:");
-  // ?
+  const textTag =
+    "<div><section><blockquote>Texto <img /></blockquote></section></div>";
+  console.log(textTag.match(/<\w+>/g));
 
   /*
     Crie uma expressão regular que faça o match com uma tag HTML vazia, casando
@@ -88,7 +90,9 @@
     ["<li></li>", "<li></li>", "<span></span>"]
     */
   console.log("\nMatch com tags HTML vazias (abertura e fechamento da tag):");
-  // ?
+  const textOpenCloseTag =
+    "<div><ul><li></li><li></li><li><span></span></li></ul></div>";
+  console.log(textOpenCloseTag.match(/<\w+><\/\w+>/g));
 
   /*
     Vamos complicar um pouco agora :D
@@ -113,5 +117,8 @@
     corretas, para depois aplicar no código ;)
     */
   console.log("\nFazer replace dos textos das tags:");
-  // ?
+  const textCompleteTags =
+    "<h1>Título da página</h1><p>Este é um parágrafo</p><footer>Rodapé</footer>";
+  const matchTags = textCompleteTags.match(/<\w+>.{2,20}<\/\w+>/g);
+  console.log(matchTags);
 })();
