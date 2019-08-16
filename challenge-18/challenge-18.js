@@ -120,5 +120,12 @@
   const textCompleteTags =
     "<h1>Título da página</h1><p>Este é um parágrafo</p><footer>Rodapé</footer>";
   const matchTags = textCompleteTags.match(/<\w+>.{2,20}<\/\w+>/g);
-  console.log(matchTags);
+  const resultMatchTags = matchTags
+    .map(matchTag =>
+      matchTag.replace(/<(\w+)>(.{2,20})<\/\w+>/, function(_, tag, text) {
+        return `<${tag}>O texto dentro da tag "${tag}" é "${text}"</${tag}>`;
+      })
+    )
+    .join("\n");
+  console.log(resultMatchTags);
 })();
