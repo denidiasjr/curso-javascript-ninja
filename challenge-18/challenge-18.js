@@ -21,11 +21,11 @@
     return cpf.replace(/[\D]/g, "");
   }
   const cpfOnlyNumbers = [
-    cleanCPF("049-214 3421-1"),
-    cleanCPF("210.458.522-05"),
-    cleanCPF("735 500 794 - 22"),
-    cleanCPF("101.123-131x32")
-  ];
+    "049-214 3421-1",
+    "210.458.522-05",
+    "735 500 794 - 22",
+    "101.123-131x32"
+  ].map(cleanCPF);
 
   cpfOnlyNumbers.forEach(cpf => console.log(cpf));
 
@@ -37,12 +37,7 @@
   console.log("\nFormatando CPFs corretamente:");
 
   function formatCPF(cpf) {
-    return cpf.replace(
-      /(\d{3})(\d{3})(\d{3})(\d{2})/g,
-      (text, group1, group2, group3, group4) => {
-        return group1 + "." + group2 + "." + group3 + "-" + group4;
-      }
-    );
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-4");
   }
 
   const cpfConverted = cpfOnlyNumbers.map(cpf => formatCPF(cpf));
@@ -64,7 +59,7 @@
   );
 
   const textMonth = "Os meses de janeiro, junho e julho começam com a letra j.";
-  console.log(textMonth.match(/(junho|julho)/g));
+  console.log(textMonth.match(/(ju[nl]ho)/g));
 
   /*
     Crie uma expressão regular que faça o match com a abertura de uma tag
@@ -122,9 +117,10 @@
   const matchTags = textCompleteTags.match(/<\w+>.{2,20}<\/\w+>/g);
   const resultMatchTags = matchTags
     .map(matchTag =>
-      matchTag.replace(/<(\w+)>(.{2,20})<\/\w+>/, function(_, tag, text) {
-        return `<${tag}>O texto dentro da tag "${tag}" é "${text}"</${tag}>`;
-      })
+      matchTag.replace(
+        /<(\w+)>([^<]+)<\/\w+>/,
+        '<$1>O texto dentro da tag "$1" é "$2"</$1>'
+      )
     )
     .join("\n");
   console.log(resultMatchTags);
