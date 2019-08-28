@@ -101,17 +101,11 @@ para exemplificar.
       matchClasses = matchClasses.concat(regexMatch[1].split(" "));
     }
 
-    const isMatchedClass = matchClasses.some(
-      matchClass => matchClass === cssClass
-    );
-
-    return `${isMatchedClass} para a classe ${cssClass}`;
+    return matchClasses.some(matchClass => matchClass === cssClass);
   }
 
-  console.log(hasClass(markup, "container"));
-  console.log(hasClass(markup, "text"));
-  console.log(hasClass(markup, "date"));
-  console.log(hasClass(markup, "excerpt"));
-  console.log(hasClass(markup, "main"));
-
+  const cssClasses = ["container", "text", "date", "excerpt", "main"];
+  cssClasses.forEach(cssClass =>
+    console.log(`${hasClass(markup, cssClass)} para a classe ${cssClass}`)
+  );
 })();
