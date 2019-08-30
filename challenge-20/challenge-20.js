@@ -86,7 +86,7 @@ Caso contrário, mostre um alerta com a mensagem:
 */
 
 function isValidEmail(email) {
-    return email.match(/\w+@\w+\.[\w\d\.]+[\w\d]$/);
+    return email.match(/^[\w\d\.\+]+@[\w\d]+\.\w{2,}(?:\.\w{1,2})?$/);
 }
 
 $button.addEventListener('click', () => {
@@ -105,6 +105,12 @@ $button.addEventListener('click', () => {
 
     if (!isValidEmail($inputEmail.value))
         return win.alert('Entre com um e-mail válido!');
+
+    if (win.confirm('Tem certeza que deseja enviar o formulário?')) {
+        win.alert('Enviado com sucesso!');
+    } else {
+        win.alert('Não enviado.');
+    }
 });
 
 /*
