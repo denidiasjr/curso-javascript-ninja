@@ -83,10 +83,12 @@ Caso contrário, mostre um alerta com a mensagem:
 */
 
 function isValidEmail(email) {
-    return email.match(/^[\w\d\.\+]+@[\w\d]+\.\w{2,}(?:\.\w{1,2})?$/);
+    return email.match(/^[\w\.\+]+@\w+\.\w{2,}(?:\.\w{1,2})?$/);
 }
 
-$button.addEventListener('click', () => {
+$button.addEventListener('click', event => {
+
+    event.preventDefault();
 
     if (!$inputUsername.value)
         return win.alert('Preencha o nome do usuário!');
