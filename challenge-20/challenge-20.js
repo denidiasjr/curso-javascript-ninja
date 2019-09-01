@@ -17,10 +17,7 @@ resultado à uma variável chamada `username`. Se o usuário não digitar um
 nome, `username` deve receber "Desconhecido".
 Com a resposta, mostre um alert com a mensagem "Bem vindo [USERNAME]!"
 */
-let username = win.prompt('Qual o seu nome?');
-
-if (username === null) 
-    username = 'Desconhecido';
+let username = win.prompt('Qual o seu nome?') || 'Desconhecido';
 
 win.alert(`Bem vindo ${username}!`);
 /*
