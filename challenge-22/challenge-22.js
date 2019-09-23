@@ -32,7 +32,7 @@ console.log(getFullName.call(thayna));
   os parâmetros passados para essa função.
   */
 function sum() {
-  return Array.prototype.reduce.call(arguments, (acum, item) => acum + item);
+  return Array.prototype.reduce.call(arguments, (acum, item) => +acum + +item);
 }
 
 /*
@@ -64,7 +64,7 @@ console.log(userEntry);
   */
 console.log("\nFunção que limpa entrada do usuário (somente números):");
 function justNumbers(text) {
-  return text.match(/(\d+)/g).map(number => Number(number));
+  return text.match(/(\d+)/g);
 }
 console.log(justNumbers);
 
@@ -81,4 +81,4 @@ console.log(numbers);
   números desse array e mostre o resultado no console.
   */
 console.log("\nSomar números entrados pelo usuário:");
-console.log(sum(...numbers));
+console.log(sum.apply(null, numbers));
