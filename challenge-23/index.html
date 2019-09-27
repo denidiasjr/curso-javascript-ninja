@@ -18,25 +18,36 @@
             width: 206px;
             margin-bottom: 10px;
         }
+
+        .button-clear {
+            width: 158px;
+        }
     </style>
-    <input id="text_calc" disabled/>
+    <input id="text_calc" value="0" disabled />
+    <br />
+    <button class="button-clear">CE</button>
+    <button class="button-operator" data-js="split">/</button>
     <br/>
-    <button data-js="1">1</button>
-    <button data-js="2">2</button>
-    <button data-js="3">3</button>
-    <button data-js="sum">+</button>
+    <button class="button-number" data-js="1">1</button>
+    <button class="button-number" data-js="2">2</button>
+    <button class="button-number" data-js="3">3</button>
+    <button class="button-operator" data-js="multi">x</button>
+    
     <br/>
-    <button data-js="4">4</button>
-    <button data-js="5">5</button>
-    <button data-js="6">6</button>
-    <button data-js="sub">-</button>
+    <button class="button-number" data-js="4">4</button>
+    <button class="button-number" data-js="5">5</button>
+    <button class="button-number" data-js="6">6</button>
+    <button class="button-operator" data-js="sub">-</button>
+    
     <br/>
-    <button data-js="7">7</button>
-    <button data-js="8">8</button>
-    <button data-js="9">9</button>
-    <button data-js="multi">x</button>
+    <button class="button-number" data-js="7">7</button>
+    <button class="button-number" data-js="8">8</button>
+    <button class="button-number" data-js="9">9</button>
+    <button class="button-operator" data-js="sum">+</button>
     <br/>
-    <button data-js="0" style="width: 158px">0</button>
-    <button data-js="split">/</button>
+    <button class="button-number" data-js="0" style="width: 158px">0</button>
+    <button class="button-result"> = </button>
+
+    <script src="challenge-23.js"></script>
 </body>
 </html>

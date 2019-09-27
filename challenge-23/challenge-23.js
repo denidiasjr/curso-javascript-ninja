@@ -23,3 +23,51 @@ multiplicação (x), então no input deve aparecer "1+2x".
 input;
 - Ao pressionar o botão "CE", o input deve ficar zerado.
 */
+(function(win, doc) {
+
+    const BUTTON_NUMBER = 'button-number';
+    const BUTTON_OPERATOR = 'button-operator';
+    const BUTTON_CLEAR = 'button-clear';
+    const BUTTON_RESULT = 'button-result';
+
+    const inputText = doc.getElementById('text_calc');
+
+    document.addEventListener('click', event => {
+
+        const elementTarget = event.target;
+
+        if (elementTarget.className === BUTTON_NUMBER) {
+            addNumber(elementTarget.innerText);
+        }
+        
+        if (elementTarget.className === BUTTON_OPERATOR) {
+            addOperator(elementTarget.innerText);
+        }
+
+        if (elementTarget.className === BUTTON_CLEAR) {
+            clearInput();
+        }
+
+        if (elementTarget.className === BUTTON_RESULT) {
+            setResult();
+        }
+    });
+
+    function addNumber(number) {
+        inputText.value += number;
+    }
+
+    function addOperator(operator) {
+        inputText.value += operator;
+    }
+
+    function clearInput() {
+        inputText.value = 0;
+    }
+
+    function setResult() {
+
+    }
+    
+
+})(window, document);
