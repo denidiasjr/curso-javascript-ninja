@@ -32,7 +32,7 @@ input;
 
     const inputText = doc.getElementById('text_calc');
 
-    document.addEventListener('click', event => {
+    doc.addEventListener('click', event => {
 
         const elementTarget = event.target;
 
@@ -58,7 +58,19 @@ input;
     }
 
     function addOperator(operator) {
-        inputText.value += operator;
+
+        if (inputText.value.length === 0) {
+            return inputText.value = '';
+        }
+
+        const lastChar = inputText.value[inputText.value.length - 1];
+
+        if (isNaN(lastChar)) {
+            inputText.value = inputText.value.substring(0, inputText.value.length - 1) + operator;
+        } else {
+            inputText.value += operator;
+        }
+
     }
 
     function clearInput() {
