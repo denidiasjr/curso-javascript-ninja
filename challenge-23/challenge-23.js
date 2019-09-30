@@ -79,6 +79,28 @@ input;
 
     function setResult() {
 
+        let inputValue = inputText.value;
+        const lastChar = inputValue[inputValue.length - 1];
+
+        if (isNaN(lastChar)) {
+            inputValue = inputValue.substring(0, inputValue.length - 1);
+        }
+
+        const arrayOperators = ['x', '/', '+', '-'];
+        
+        while (arrayOperators.some((operator => inputValue.indexOf(operator) !== -1))) {
+            
+            arrayOperators.forEach((operator, index) => {
+                
+                const indexOperator = inputValue.indexOf(operator);
+
+                if (indexOperator === -1) {
+                    return arrayOperators.splice(index, 1);
+                }
+
+            });
+        }
+
     }
     
 
