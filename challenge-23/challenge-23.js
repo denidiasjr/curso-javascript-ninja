@@ -24,11 +24,13 @@ input;
 - Ao pressionar o botão "CE", o input deve ficar zerado.
 */
 (function(win, doc) {
+    'use strict';
 
     const BUTTON_NUMBER = 'button-number';
     const BUTTON_OPERATOR = 'button-operator';
     const BUTTON_CLEAR = 'button-clear';
     const BUTTON_RESULT = 'button-result';
+    const OPERATORS = ['x', '/', '+', '-'];
 
     const inputText = doc.getElementById('text_calc');
 
@@ -37,11 +39,11 @@ input;
         const elementTarget = event.target;
 
         if (elementTarget.className === BUTTON_NUMBER) {
-            addNumber(elementTarget.innerText);
+            addNumber(elementTarget.value);
         }
         
         if (elementTarget.className === BUTTON_OPERATOR) {
-            addOperator(elementTarget.innerText);
+            addOperator(elementTarget.value);
         }
 
         if (elementTarget.className === BUTTON_CLEAR) {
@@ -59,18 +61,11 @@ input;
 
     function addOperator(operator) {
 
-        if (inputText.value.length === 0) {
-            return inputText.value = '';
-        }
-
-        const lastChar = inputText.value[inputText.value.length - 1];
-
-        if (isNaN(lastChar)) {
-            inputText.value = inputText.value.substring(0, inputText.value.length - 1) + operator;
+        if (isLastItemOperator(inputText.value)) {
+            inputText.value = inputText.value.slice(0, -1) + operator;
         } else {
             inputText.value += operator;
         }
-
     }
 
     function clearInput() {
@@ -80,13 +75,13 @@ input;
     function setResult() {
 
         let inputValue = inputText.value;
-        const lastChar = inputValue[inputValue.length - 1];
-
-        if (isNaN(lastChar)) {
-            inputValue = inputValue.substring(0, inputValue.length - 1);
+        
+        // Check if lastChar is an operator. If it is, remove it.
+        if (isLastItemOperator(inputValue)) {
+            inputValue = inputValue.slice(0, -1);
         }
 
-        const arrayOperators = ['x', '/', '+', '-'];
+        const arrayOperators = ['x', '\\/', '\\+', '-'];
         
         while (arrayOperators.some((operator => inputValue.indexOf(operator) !== -1))) {
             
@@ -98,10 +93,18 @@ input;
                     return arrayOperators.splice(index, 1);
                 }
 
+                const regexForOperator = new RegExp(`(\\d+)\\${inputValue[indexOperator]}(\\d+)`);
+
+                const matchValuesOperator = inputValue.match(regexForOperator); 
             });
         }
-
     }
-    
+
+    function isLastItemOperator(text) {
+        
+        const lastChar = text.split('').pop();
+        return OPERATORS.some(operator => operator === lastChar);
+    }
+
 
 })(window, document);
