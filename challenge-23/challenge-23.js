@@ -74,30 +74,48 @@ input;
 
     function setResult() {
 
-        let inputValue = inputText.value;
-        
         // Check if lastChar is an operator. If it is, remove it.
-        if (isLastItemOperator(inputValue)) {
-            inputValue = inputValue.slice(0, -1);
+        if (isLastItemOperator(inputText.value)) {
+            inputValue = inputText.value.slice(0, -1);
         }
 
-        const arrayOperators = ['x', '\\/', '\\+', '-'];
-        
-        while (arrayOperators.some((operator => inputValue.indexOf(operator) !== -1))) {
-            
-            arrayOperators.forEach((operator, index) => {
+        const result = inputText.value.match(/(?:\d+|[\+x\-\/])/g);
+
+        OPERATORS.forEach(operator => {
+
+            let indexOfOperator = result.indexOf(operator);
+            while (indexOfOperator !== -1) {
                 
-                const indexOperator = inputValue.indexOf(operator);
+                const numberA = Number(result[indexOfOperator - 1]);
+                const numberB = Number(result[indexOfOperator + 1]);
+                
+                const calculatedValue = calculateValue(numberA, numberB, operator);
 
-                if (indexOperator === -1) {
-                    return arrayOperators.splice(index, 1);
-                }
+                result[indexOfOperator - 1] = calculatedValue;
+                result.splice(indexOfOperator, 2);
 
-                const regexForOperator = new RegExp(`(\\d+)\\${inputValue[indexOperator]}(\\d+)`);
+                indexOfOperator = result.indexOf(operator);
+            }
+        });
 
-                const matchValuesOperator = inputValue.match(regexForOperator); 
-            });
+        inputText.value = result.join('');
+    }
+
+    function calculateValue(numberA, numberB, operator) {
+
+        switch (operator) {
+            case '+':
+                return numberA + numberB;
+            case '-':
+                return numberA - numberB;
+            case 'x':
+                return numberA * numberB;
+            case '/':
+                return numberA / numberB;
+            default:
+                return numberA;
         }
+        
     }
 
     function isLastItemOperator(text) {
