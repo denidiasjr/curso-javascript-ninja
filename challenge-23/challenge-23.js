@@ -56,7 +56,12 @@ input;
     });
 
     function addNumber(number) {
-        inputText.value += number;
+
+        if (inputText.value === '0') {
+            inputText.value = number;
+        } else {
+            inputText.value += number;
+        }
     }
 
     function addOperator(operator) {
