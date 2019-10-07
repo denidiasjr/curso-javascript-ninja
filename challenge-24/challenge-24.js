@@ -16,10 +16,12 @@ const $buttonsOperations = selectByQuery('[data-js="button-operation"]');
 const $buttonCE = selectByQuery('[data-js="button-ce"]');
 const $buttonEqual = selectByQuery('[data-js="button-equal"]');
 
-createOnClickListener($buttonsNumbers, handleClickNumber);
-createOnClickListener($buttonsOperations, handleClickOperation);
-createOnClickListener($buttonCE, handleClickCE);
-createOnClickListener($buttonEqual, handleClickEqual);
+function initEvents() {
+  createOnClickListener($buttonsNumbers, handleClickNumber);
+  createOnClickListener($buttonsOperations, handleClickOperation);
+  createOnClickListener($buttonCE, handleClickCE);
+  createOnClickListener($buttonEqual, handleClickEqual);
+}
 
 function selectByQuery(query) {
   const selector = document.querySelectorAll(query);
@@ -94,3 +96,5 @@ function calculateValue(firstValue, lastValue, operator) {
       return Number(firstValue) / Number(lastValue);
   }
 }
+
+initEvents();
