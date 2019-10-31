@@ -1,4 +1,4 @@
-  /*
+/*
   No HTML:
   - Crie um formulário com um input de texto que receberá um CEP e um botão
   de submit;
@@ -25,3 +25,23 @@
   - Utilize a lib DOM criada anteriormente para facilitar a manipulação e
   adicionar as informações em tela.
   */
+
+const formElement = document.querySelector('form');
+const cepInputElement = document.querySelector('#input_cep');
+
+function requestCep(event) {
+
+  event.preventDefault();
+
+  const ajaxRequest = new XMLHttpRequest();
+
+  ajaxRequest.open('GET', `http://apps.widenet.com.br/busca-cep/api/cep.json?code=${cepInputElement.value}`)
+  ajaxRequest.send();
+
+  document.addEventListener('readystatechange', stateEvent => {
+
+  })
+
+}
+
+formElement.on('submit', requestCep);
