@@ -39,6 +39,16 @@ function clearCepInfo() {
   cepInfos.forEach(cepInfo => cepInfo.innerHTML = '');
 }
 
+function showCepInfo(response) {
+  Object.keys(response).map(key => {
+    const cepSelector = document.querySelector(`#cep_${key}`);
+
+    if (cepSelector) {
+      cepSelector.innerHTML = response[key];
+    }
+  });
+}
+
 function normalizeCepValue(cepInputValue) {
   return cepInputValue.replace(/\D/g, '');
 }
@@ -72,16 +82,8 @@ function requestCep(event) {
       return statusElement.innerHTML = `Não encontramos o endereço para o CEP ${cepValue}...`;
     }
 
-    Object.keys(response).map(key => {
-      const cepSelector = document.querySelector(`#cep_${key}`);
-
-      if (cepSelector) {
-        cepSelector.innerHTML = response[key];
-      }
-    });
-
+    showCepInfo(response);
     statusElement.innerHTML = `Endereço referente ao CEP ${cepValue}`;
-
   })
 
 }
