@@ -28,6 +28,20 @@
 
 const formElement = document.querySelector('form');
 const cepInputElement = document.querySelector('#input_cep');
+const statusElement = document.querySelector('#status');
+
+function isResponseFailed(ajaxRequest) {
+  return ajaxRequest.readyState === ajaxRequest.DONE && ajaxRequest.status !== 200;
+}
+
+function clearCepInfo() {
+  const cepInfos = [ ...document.querySelectorAll('#cep_info span') ];
+  cepInfos.forEach(cepInfo => cepInfo.innerHTML = '');
+}
+
+function normalizeCepValue(cepInputValue) {
+  return cepInputValue.replace(/\D/g, '');
+}
 
 function requestCep(event) {
 
@@ -35,13 +49,41 @@ function requestCep(event) {
 
   const ajaxRequest = new XMLHttpRequest();
 
-  ajaxRequest.open('GET', `http://apps.widenet.com.br/busca-cep/api/cep.json?code=${cepInputElement.value}`)
-  ajaxRequest.send();
+  const cepValue = normalizeCepValue(cepInputElement.value);
 
-  document.addEventListener('readystatechange', stateEvent => {
+  ajaxRequest.open('GET', `http://apps.widenet.com.br/busca-cep/api/cep.json?code=${cepValue}`)
+  ajaxRequest.send();
+  
+  ajaxRequest.addEventListener('readystatechange', () => {
+
+    if (isResponseFailed(ajaxRequest)) {
+      clearCepInfo();
+      return statusElement.innerHTML = `Não foi possível buscar informações para o CEP ${cepValue}.`;
+    }
+
+    if (ajaxRequest.readyState !== ajaxRequest.DONE) {
+      clearCepInfo();
+      return statusElement.innerHTML = `Buscando informações para o CEP ${cepValue}...`;
+    }
+
+    const response = JSON.parse(ajaxRequest.response);
+    
+    if (response.status === 0) {
+      return statusElement.innerHTML = `Não encontramos o endereço para o CEP ${cepValue}...`;
+    }
+
+    Object.keys(response).map(key => {
+      const cepSelector = document.querySelector(`#cep_${key}`);
+
+      if (cepSelector) {
+        cepSelector.innerHTML = response[key];
+      }
+    });
+
+    statusElement.innerHTML = `Endereço referente ao CEP ${cepValue}`;
 
   })
 
 }
 
-formElement.on('submit', requestCep);
+formElement.addEventListener('submit', requestCep);
