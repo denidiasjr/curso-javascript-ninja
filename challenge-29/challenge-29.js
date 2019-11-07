@@ -36,4 +36,56 @@
   que será nomeado de "app".
   */
 
+  function app() {
+    
+    function getCompanyInfo() {
+
+      const ajaxRequest = new XMLHttpRequest();
+      ajaxRequest.open('GET', 'http://localhost:8080/company.json');
+      ajaxRequest.send();
+      
+      return new Promise((resolve, reject) => {
+        ajaxRequest.onreadystatechange = function() {
+  
+          if (ajaxRequest.readyState !== ajaxRequest.DONE)  {
+            return;
+          }
+
+          if (ajaxRequest.status !== 200) {
+            reject('Erro ao obter os dados da empresa');
+          }
+
+          resolve(JSON.parse(ajaxRequest.response));
+        };
+      });
+    }
+
+    function showCompanyInfo(company) {
+      const nameElement = document.querySelector('#company h2');
+      const phoneElement = document.querySelector('#company h3');
+
+      nameElement.innerHTML = company.name;
+      phoneElement.innerHTML = company.phone;
+    }
+
+
+    function initialize() {
+
+      // Get and show company info
+      getCompanyInfo()
+        .then((company) => {
+          showCompanyInfo(company);
+        })
+        .catch(alert);
+        
+
+    }
+
+    initialize();
+  }
+
+  window.app = app;
+
+  app();
+
 })();
