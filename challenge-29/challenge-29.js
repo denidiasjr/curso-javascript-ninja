@@ -68,6 +68,37 @@
       phoneElement.innerHTML = company.phone;
     }
 
+    function addCar() {
+      const carAttributes = [...document.querySelectorAll('#car_form input')];
+      const carsTable = document.querySelector('#cars_table tbody');
+      const newCarRow = document.createElement('tr'); 
+  
+      carAttributes.forEach((elem, index) => {
+  
+        const newCarColumn = document.createElement('td');
+  
+        if (index === 0) {
+          newCarColumn.innerHTML = `<img src="${elem.value}"/>`;
+        } else {
+          newCarColumn.innerHTML = elem.value;
+        }
+  
+        newCarRow.appendChild(newCarColumn);
+      }); 
+  
+      carsTable.appendChild(newCarRow);
+    }
+
+    function listenToAddcar() {
+
+      const carForm = document.querySelector('#car_form');
+
+      carForm.addEventListener('submit', event => {
+
+        event.preventDefault();
+        addCar();
+      });
+    }
 
     function initialize() {
 
@@ -78,7 +109,8 @@
         })
         .catch(alert);
         
-
+      // Listener to add car operation
+      listenToAddcar();
     }
 
     initialize();
