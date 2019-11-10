@@ -41,7 +41,7 @@
     function getCompanyInfo() {
 
       const ajaxRequest = new XMLHttpRequest();
-      ajaxRequest.open('GET', 'http://localhost:8080/company.json');
+      ajaxRequest.open('GET', 'http://127.0.0.1:8080/company.json');
       ajaxRequest.send();
       
       return new Promise((resolve, reject) => {
